@@ -7,8 +7,18 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                sh './gradlew test'
+            // parallelize browser tests
+            parallel {
+                stage('test: chrome') {
+                    steps {
+                        sh './gradlew test'
+                    }
+                }
+                stage('test: firefox') {
+                    steps {
+                        sh './gradlew testFirefox'
+                    }
+                }
             }
             post {
                 always {
