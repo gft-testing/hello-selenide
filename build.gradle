@@ -45,11 +45,11 @@ tasks.withType(Test) {
     systemProperties["selenide.browser"]="chrome";
     //systemProperties["selenide.browserVersion"]="97.0"
     systemProperties["selenide.browserSize"]="1024x768";
+    ignoreFailures = true
+    useJUnitPlatform()
 }
 
 test {
-    ignoreFailures = true
-    useJUnitPlatform()
 }
 
 task testFirefox (type:Test) {
