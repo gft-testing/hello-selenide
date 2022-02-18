@@ -6,11 +6,13 @@ pipeline {
 
     stages {
         stage('Clean') {
+            when { expression { false } }
             steps {
                 sh './gradlew clean'
             }
         }
         stage('Test') {
+            when { expression { false } }
             // parallelize browser tests
             parallel {
                 stage('test: chrome') {
