@@ -1,9 +1,15 @@
 pipeline {
     agent any
+    options {
+        ansiColor('xterm')
+     }
+
     stages {
         stage('Clean') {
             steps {
-                sh './gradlew clean'
+                nodejs(nodeVersion) {
+                    sh './gradlew clean'
+                }
             }
         }
         stage('Test') {
@@ -23,6 +29,16 @@ pipeline {
             post {
                 always {
                     junit 'build/test-results/test/*.xml'
+                }
+            }
+        }
+        stage('Security') {
+            steps {
+                sh 'trivy fs --format json --output trivy-results.json .'
+            }
+            post {
+                always {
+                    recordIssues(tools: [trivy(pattern: 'trivy-results.json')])
                 }
             }
         }
