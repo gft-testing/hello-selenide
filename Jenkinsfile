@@ -7,9 +7,7 @@ pipeline {
     stages {
         stage('Clean') {
             steps {
-                nodejs(nodeVersion) {
-                    sh './gradlew clean'
-                }
+                sh './gradlew clean'
             }
         }
         stage('Test') {
